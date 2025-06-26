@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>still not dead®</title>
+  <!-- Import Gothic Blackletter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+    body { position: relative; }
+
+    /* Hero Video */
+    #hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    /* On mobile, show full video without cropping */
+    @media (max-width: 600px) {
+      #hero-video {
+        object-fit: contain;
+        background: #000;
+      }
+    }
+
+    /* Overlay Text */
+    .overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .overlay h1 {
+      font-family: 'UnifrakturMaguntia', cursive;
+      font-size: clamp(3rem, 8vw, 8rem);
+      color: #fff;
+      text-transform: lowercase;
+      letter-spacing: 0.5vw;
+      line-height: 1;
+      text-shadow: 2px 2px 4px #000;
+      display: inline-flex;
+      align-items: flex-start;
+    }
+    .overlay .registered {
+      font-size: clamp(1rem, 1.5vw, 2rem);
+      vertical-align: super;
+      margin-left: 0.2vw;
+    }
+  </style>
+</head>
+<body>
+  <!-- Fullscreen background video -->
+  <video id="hero-video" autoplay muted loop playsinline preload="auto">
+    <source src="video.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Centered overlay text -->
+  <div class="overlay">
+    <h1>still not dead<span class="registered">®</span></h1>
+  </div>
+</body>
+</html>
