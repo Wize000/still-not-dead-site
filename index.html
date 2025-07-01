@@ -7,33 +7,28 @@
   <!-- UnifrakturMaguntia Blackletter Font -->
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
   <style>
-    /* Reset */
+    /* Reset & Fullscreen setup */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100vh; overflow: hidden; background: transparent; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; }
+    body { position: relative; }
 
-    /* Hero Video: center-crop technique */
+    /* Hero Video: autoplay muted so browsers allow autoplay */
     #hero-video {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      transform: translate(-50%, -50%);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       object-fit: cover;
       z-index: -1;
     }
 
-    /* Overlay Text */
+    /* Centered overlay text */
     .overlay {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       white-space: nowrap;
       z-index: 1;
-      text-align: center;
+      pointer-events: none;
     }
     .overlay h1 {
       font-family: 'UnifrakturMaguntia', cursive;
@@ -41,7 +36,9 @@
       color: #fff;
       text-transform: lowercase;
       letter-spacing: clamp(0.5rem, 0.5vw, 1rem);
+      line-height: 1;
       text-shadow: none;
+      display: inline-block;
     }
     .overlay .registered {
       font-size: clamp(1rem, 1.5vw, 2rem);
@@ -51,9 +48,9 @@
   </style>
 </head>
 <body>
-  <!-- Fullscreen background video (ensure video.mp4 in root) -->
-  <video id="hero-video" src="video.mp4" autoplay loop playsinline preload="auto" controls>
-   <!-- User can control playback and sound via controls -->
+  <!-- Fullscreen background video: muted for autoplay -->
+  <video id="hero-video" autoplay muted loop playsinline preload="auto">
+    <source src="video.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
