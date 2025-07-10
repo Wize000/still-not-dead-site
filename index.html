@@ -8,19 +8,24 @@
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet" />
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}
+    html,body{width:100%;height:100%;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}
+
     #hero-video{
-      position:fixed;inset:0;
-      width:100vw;height:100vh;
-      min-width:100vw;min-height:100vh;
-      object-fit:cover;object-position:center;
-      z-index:-1;
-      background:#000;
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      width:100vw; height:100vh;
+      object-fit:cover;
+      object-position:center;
+      z-index:-10;
       display:block;
+      background:#222;
     }
+
     body{
       display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
       min-height:100vh;
+      position:relative;
+      z-index:10;
       padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
     }
     h1{
@@ -36,34 +41,38 @@
       font-family:Arial,Helvetica,sans-serif;
       font-weight:600;
       display:inline-block;
+      z-index:10;
     }
     .btn-spotify:hover,.btn-spotify:focus{background:#1ed760}
+    
+    /* Debugging outlines (optional, for testing) */
+    /* #hero-video { outline: 2px solid red; } */
+    /* body { outline: 2px solid lime; } */
+
     @media (max-width:600px){
       h1{font-size:clamp(2rem,10vw,5rem);}
       .btn-spotify{font-size:.95rem;padding:.6rem 1.2rem;}
-      #hero-video{min-width:100vw;min-height:100vh;width:100vw;height:100vh;}
+      #hero-video{width:100vw;height:100vh;}
     }
   </style>
 </head>
 <body>
-  <!-- Background video (unmuted for sound autoplay) -->
+  <!-- Background video -->
   <video id="hero-video" autoplay loop playsinline preload="auto">
     <source src="video.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
+
   <!-- Overlay content -->
   <h1>still not dead<span class="registered">®</span></h1>
   <a class="btn-spotify" href="https://open.spotify.com/artist/1AJUaWuf69wUyrUrnglEh6" target="_blank" rel="noopener">Listen on Spotify</a>
-  <!-- Try to force audio autoplay -->
+
   <script>
-    // Attempt to play with sound (note: most browsers require user interaction for unmuted video)
+    // Try to force unmuted autoplay (won't work on iOS/Android until tap)
     const video = document.getElementById('hero-video');
     video.muted = false;
     video.volume = 1.0;
-    video.play().catch(() => {
-      // If blocked, fallback to muted autoplay
-      video.muted = true;
-    });
+    video.play().catch(() => { video.muted = true; });
   </script>
 </body>
 </html>
