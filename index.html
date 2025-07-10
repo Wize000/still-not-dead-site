@@ -1,80 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
   <title>still not dead®</title>
-  <!-- UnifrakturMaguntia Blackletter Font -->
-  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
-  <style>
-    /* Reset & Fullscreen setup */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; }
-    body { position: relative; font-family: Arial, sans-serif; }
 
-    /* Hero Video */
+  <!-- Gothic font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ===== RESET ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      color: #fff;
+    }
+
+    /* ===== FULL-SCREEN VIDEO (robust on mobile) ===== */
     #hero-video {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
+      position: fixed;         /* keep in place even when address bar shrinks */
+      inset: 0;                /* top:0; right:0; bottom:0; left:0 */
+      width: 100%;
+      height: 100dvh;          /* dynamic vh for Safari iOS 15+ */
+      height: 100svh;          /* small viewport (fallback) */
+      height: 100lvh;          /* large viewport (fallback) */
       object-fit: cover;
+      object-position: center;
       z-index: -1;
     }
 
-    /* Centered overlay text */
-    .overlay {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
+    /* ===== FLEX CONTAINER FOR CENTERED OVERLAY ===== */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      z-index: 1;
-    }
-    .overlay h1 {
-      font-family: 'UnifrakturMaguntia', cursive;
-      font-size: clamp(3rem, 8vw, 8rem);
-      color: #fff;
-      text-transform: lowercase;
-      letter-spacing: clamp(0.5rem, 0.5vw, 1rem);
-      line-height: 1;
-      white-space: nowrap;
-    }
-    .overlay .registered {
-      font-size: clamp(1rem, 1.5vw, 2rem);
-      vertical-align: super;
-      margin-left: 0.2vw;
+      /* notch / rounded-corner padding */
+      padding: env(safe-area-inset-top)
+                env(safe-area-inset-right)
+                env(safe-area-inset-bottom)
+                env(safe-area-inset-left);
     }
 
-    /* Spotify Button */
-    .btn {
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: 0.75rem 1.5rem;
+    /* ===== TITLE ===== */
+    h1 {
+      font-family: 'UnifrakturMaguntia', cursive;
+      font-size: clamp(3rem, 8vw, 8rem);
+      line-height: 1;
+      letter-spacing: 0.05em;
+      text-transform: lowercase;
+      white-space: nowrap;
+    }
+    .registered {
+      font-size: 0.35em;
+      vertical-align: super;
+      margin-left: 0.1em;
+    }
+
+    /* ===== SPOTIFY BUTTON ===== */
+    .btn-spotify {
+      margin-top: 1.4rem;
+      padding: 0.75rem 1.6rem;
+      background: #1db954;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
       font-size: 1rem;
       text-decoration: none;
-      border-radius: 4px;
-      transition: background 0.3s;
+      display: inline-block;
+      transition: background 0.25s;
     }
-    .spotify {
-      background: #1DB954;
-      color: #fff;
-    }
-    .spotify:hover {
+    .btn-spotify:hover,
+    .btn-spotify:focus {
       background: #1ed760;
     }
   </style>
 </head>
+
 <body>
-  <video id="hero-video" autoplay muted loop playsinline preload="auto">
-    <source src="video.mp4" type="video/mp4">
+  <!-- Background video -->
+  <video
+    id="hero-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+  >
+    <source src="video.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
 
-  <div class="overlay">
-    <h1>still not dead<span class="registered">®</span></h1>
-    <a class="btn spotify"
-       href="https://open.spotify.com/artist/1AJUaWuf69wUyrUrnglEh6"
-       target="_blank"
-       rel="noopener">Listen on Spotify</a>
-  </div>
+  <!-- Overlay content -->
+  <h1>
+    still not dead<span class="registered">®</span>
+  </h1>
+  <a
+    class="btn-spotify"
+    href="https://open.spotify.com/artist/1AJUaWuf69wUyrUrnglEh6"
+    target="_blank"
+    rel="noopener"
+  >
+    Listen on Spotify
+  </a>
 </body>
 </html>
