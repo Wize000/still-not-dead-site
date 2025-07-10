@@ -9,30 +9,33 @@
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet" />
 
   <style>
+    /* ===== RESET ===== */
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff}
+    html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}
 
-    /* --- Full-screen video that always shows --- */
+    /* ===== VIDEO: covers every viewport reliably ===== */
     #hero-video{
-      position:fixed;inset:0;
-      width:100%;height:100vh;          /* fallback */
+      position:fixed;inset:0;               /* stick even when address bar hides */
+      width:100%;height:100vh;              /* desktop fallback */
+      height:100dvh;                        /* dynamic vh (iOS 15+) */
       object-fit:cover;object-position:center;
-      min-width:100%;min-height:100%;
+      min-width:100%;min-height:100%;       /* legacy Android fallback */
       z-index:-1;
     }
 
-    /* --- Center overlay --- */
+    /* ===== FLEX OVERLAY ===== */
     body{
-      display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
       padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-      font-family:Arial,Helvetica,sans-serif;
     }
     h1{
       font-family:'UnifrakturMaguntia',cursive;
-      font-size:clamp(3rem,8vw,8rem);line-height:1;white-space:nowrap;letter-spacing:.05em;text-transform:lowercase
+      font-size:clamp(3rem,8vw,8rem);
+      letter-spacing:.05em;white-space:nowrap;text-transform:lowercase;line-height:1
     }
     .registered{font-size:.35em;vertical-align:super;margin-left:.1em}
 
+    /* ===== SPOTIFY BUTTON ===== */
     .btn-spotify{
       margin-top:1.4rem;padding:.75rem 1.6rem;
       background:#1db954;border:none;border-radius:4px;color:#fff;font-size:1rem;text-decoration:none;
@@ -54,5 +57,11 @@
   <a class="btn-spotify"
      href="https://open.spotify.com/artist/1AJUaWuf69wUyrUrnglEh6"
      target="_blank" rel="noopener">Listen on Spotify</a>
+
+  <!-- Hide controls once the video proves it loaded -->
+  <script>
+    const vid=document.getElementById('hero-video');
+    vid.addEventListener('loadeddata',()=>{ vid.removeAttribute('controls'); },{once:true});
+  </script>
 </body>
 </html>
