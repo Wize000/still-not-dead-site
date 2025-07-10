@@ -7,54 +7,63 @@
   <!-- Gothic Font -->
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet" />
   <style>
-    /* ---------- RESET ---------- */
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}
-
-    /* ---------- BACKGROUND VIDEO ---------- */
     #hero-video{
       position:fixed;inset:0;
-      width:100%;height:100vh;          /* desktop fallback */
-      height:100dvh;                    /* iOS dynamic */
+      width:100vw;height:100vh;
+      min-width:100vw;min-height:100vh;
       object-fit:cover;object-position:center;
-      min-width:100%;min-height:100%;   /* legacy fallback */
       z-index:-1;
+      background:#000;
       display:block;
     }
-
-    /* ---------- OVERLAY ---------- */
-    body{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-         padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
-    h1{font-family:'UnifrakturMaguntia',cursive;font-size:clamp(3rem,8vw,8rem);letter-spacing:.05em;line-height:1;white-space:nowrap;text-transform:lowercase}
+    body{
+      display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+      min-height:100vh;
+      padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+    h1{
+      font-family:'UnifrakturMaguntia',cursive;
+      font-size:clamp(3rem,8vw,8rem);
+      letter-spacing:.05em;line-height:1;white-space:nowrap;text-transform:lowercase;
+    }
     .registered{font-size:.35em;vertical-align:super;margin-left:.1em}
-
-    /* ---------- SPOTIFY BUTTON ---------- */
-    .btn-spotify{margin-top:1.5rem;padding:.75rem 1.6rem;background:#1db954;border-radius:4px;color:#fff;font-size:1rem;text-decoration:none;transition:background .25s;font-family:'UnifrakturMaguntia',cursive}
+    .btn-spotify{
+      margin-top:1.5rem;padding:.75rem 1.6rem;
+      background:#1db954;border-radius:4px;color:#fff;font-size:1rem;text-decoration:none;
+      transition:background .25s;
+      font-family:Arial,Helvetica,sans-serif;
+      font-weight:600;
+      display:inline-block;
+    }
     .btn-spotify:hover,.btn-spotify:focus{background:#1ed760}
+    @media (max-width:600px){
+      h1{font-size:clamp(2rem,10vw,5rem);}
+      .btn-spotify{font-size:.95rem;padding:.6rem 1.2rem;}
+      #hero-video{min-width:100vw;min-height:100vh;width:100vw;height:100vh;}
+    }
   </style>
 </head>
 <body>
-  <!-- Background video (muted for autoplay) -->
-  <video id="hero-video" autoplay muted loop playsinline preload="auto" controls>
+  <!-- Background video (unmuted for sound autoplay) -->
+  <video id="hero-video" autoplay loop playsinline preload="auto">
     <source src="video.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
-
   <!-- Overlay content -->
   <h1>still not dead<span class="registered">®</span></h1>
   <a class="btn-spotify" href="https://open.spotify.com/artist/1AJUaWuf69wUyrUrnglEh6" target="_blank" rel="noopener">Listen on Spotify</a>
-
-  <!-- OPTIONAL audio element if you need separate sound, uncomment below -->
-  <!--
-  <audio id="hero-audio" autoplay preload="auto">
-    <source src="video.mp4" type="audio/mp4" />
-  </audio>
-  -->
-
-  <!-- Hide controls after video confirms load (optional) -->
+  <!-- Try to force audio autoplay -->
   <script>
-    const vid=document.getElementById('hero-video');
-    vid.addEventListener('loadeddata',()=>{vid.removeAttribute('controls');},{once:true});
+    // Attempt to play with sound (note: most browsers require user interaction for unmuted video)
+    const video = document.getElementById('hero-video');
+    video.muted = false;
+    video.volume = 1.0;
+    video.play().catch(() => {
+      // If blocked, fallback to muted autoplay
+      video.muted = true;
+    });
   </script>
 </body>
 </html>
