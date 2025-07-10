@@ -8,24 +8,19 @@
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet" />
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    html,body{width:100%;height:100%;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}
-
+    html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}
     #hero-video{
-      position:fixed;
-      top:0;left:0;right:0;bottom:0;
-      width:100vw; height:100vh;
-      object-fit:cover;
-      object-position:center;
-      z-index:-10;
+      position:fixed;inset:0;
+      width:100vw;height:100vh;
+      min-width:100vw;min-height:100vh;
+      object-fit:cover;object-position:center;
+      z-index:-1;
+      background:#000;
       display:block;
-      background:#222;
     }
-
     body{
       display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
       min-height:100vh;
-      position:relative;
-      z-index:10;
       padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
     }
     h1{
@@ -41,38 +36,54 @@
       font-family:Arial,Helvetica,sans-serif;
       font-weight:600;
       display:inline-block;
-      z-index:10;
     }
     .btn-spotify:hover,.btn-spotify:focus{background:#1ed760}
-    
-    /* Debugging outlines (optional, for testing) */
-    /* #hero-video { outline: 2px solid red; } */
-    /* body { outline: 2px solid lime; } */
-
     @media (max-width:600px){
       h1{font-size:clamp(2rem,10vw,5rem);}
       .btn-spotify{font-size:.95rem;padding:.6rem 1.2rem;}
-      #hero-video{width:100vw;height:100vh;}
+      #hero-video{min-width:100vw;min-height:100vh;width:100vw;height:100vh;}
+    }
+    /* Optional: Overlay Unmute button on mobile */
+    #unmute-btn {
+      display:none;
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: .8em 2em;
+      background: rgba(30,30,30,0.85);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      font-size: 1.15em;
+      z-index: 999;
+      font-family: Arial,Helvetica,sans-serif;
+    }
+    @media (pointer:coarse) {
+      #unmute-btn { display:block; }
     }
   </style>
 </head>
 <body>
-  <!-- Background video -->
-  <video id="hero-video" autoplay loop playsinline preload="auto">
+  <!-- Background video (MUTED for mobile autoplay!) -->
+  <video id="hero-video" autoplay loop muted playsinline preload="auto">
     <source src="video.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
-
   <!-- Overlay content -->
   <h1>still not dead<span class="registered">®</span></h1>
   <a class="btn-spotify" href="https://open.spotify.com/artist/1AJUaWuf69wUyrUrnglEh6" target="_blank" rel="noopener">Listen on Spotify</a>
-
+  <!-- Optional: Unmute Button for mobile -->
+  <button id="unmute-btn" onclick="unmuteVideo()">Tap for Sound</button>
   <script>
-    // Try to force unmuted autoplay (won't work on iOS/Android until tap)
-    const video = document.getElementById('hero-video');
-    video.muted = false;
-    video.volume = 1.0;
-    video.play().catch(() => { video.muted = true; });
+    // Optional: Tap to unmute (will only work after user gesture)
+    function unmuteVideo() {
+      const video = document.getElementById('hero-video');
+      video.muted = false;
+      video.volume = 1.0;
+      video.play();
+      document.getElementById('unmute-btn').style.display = 'none';
+    }
   </script>
 </body>
 </html>
